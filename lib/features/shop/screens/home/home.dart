@@ -14,6 +14,7 @@ import '../../../../common/widgets/custom_shapes/containers/circular_container.d
 import '../../../../common/widgets/custom_shapes/curved_widgets/curved_edges_widget.dart';
 import '../../../../common/widgets/image_text_widgets/vertical_image_text.dart';
 import '../../../../common/widgets/images/rounded_images.dart';
+import '../../../../common/widgets/layouts/grid_layout.dart';
 import '../../../../common/widgets/product_cart/cart_menu_icon.dart';
 import '../../../../common/widgets/products/product_card_vertical.dart';
 import '../../../../common/widgets/texts/section_heading.dart';
@@ -24,7 +25,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -72,7 +73,8 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(height: TSizes.spaceBtwSections,),
 
 
-                  ProductCardVertical(),
+                  GridLayout(itemCount: 4, itemBuilder: (_, index) => const ProductCardVertical(),),
+
                 ],
               )
             ),
@@ -82,6 +84,8 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
+
 
 
 class TPromoSlider extends StatelessWidget {

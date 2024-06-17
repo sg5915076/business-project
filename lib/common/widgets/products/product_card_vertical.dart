@@ -71,11 +71,7 @@ class ProductCardVertical extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('\$35.5',
-                      maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.headlineMedium,
-                      ),
+                      ProductPriceText(price: '35.0',),
                       Container(
                         decoration: BoxDecoration(
                           color: TColors.dark,
@@ -97,6 +93,27 @@ class ProductCardVertical extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class ProductPriceText extends StatelessWidget {
+  const ProductPriceText({
+    super.key, this.currencySign = '\$', required this.price, this.maxLines = 1, this.isLarge = false, this.lineThrough = false,
+  });
+
+  final String currencySign, price;
+  final int maxLines;
+  final bool isLarge;
+  final bool lineThrough;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(currencySign + price,
+    maxLines: maxLines,
+      overflow: TextOverflow.ellipsis,
+      style: isLarge ? Theme.of(context).textTheme.headlineMedium!.apply(decoration: lineThrough ? TextDecoration.lineThrough : null)
+      : Theme.of(context).textTheme.titleLarge!.apply(decoration: lineThrough ? TextDecoration.lineThrough : null) ,
     );
   }
 }

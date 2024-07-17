@@ -19,6 +19,8 @@ import '../../../../common/widgets/product_cart/cart_menu_icon.dart';
 import '../../../../common/widgets/products/product_card_vertical.dart';
 import '../../../../common/widgets/texts/section_heading.dart';
 import '../../../../utils/constants/sizes.dart';
+import '../all_products/all_products.dart';
+import '../sub_category/sub_categories.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -29,10 +31,10 @@ class HomeScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            TPrimaryHeaderContainer(
+            const PrimaryHeaderContainer(
               child: Column(
                 children: [
-                  THomeAppBar(),
+                  HomeAppBar(),
                   SizedBox(
                     height: TSizes.spaceBtwSections,
                   ),
@@ -44,7 +46,7 @@ class HomeScreen extends StatelessWidget {
                     padding: EdgeInsets.only(left: TSizes.defaultSpace),
                     child: Column(
                       children: [
-                        TSectionHeading(
+                        SectionHeading(
                           title: 'Popular Categories',
                           showActionButton: false,
                           textColor: Colors.white,
@@ -52,7 +54,7 @@ class HomeScreen extends StatelessWidget {
                         SizedBox(
                           height: TSizes.spaceBtwItems,
                         ),
-                        THomeCategories(),
+                        HomeCategories(),
                       ],
                     ),
                   ),
@@ -61,17 +63,19 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(TSizes.defaultSpace),
+              padding: const EdgeInsets.all(TSizes.defaultSpace),
               child: Column(
                 children: [
-                  TPromoSlider(banners: [
+                  const TPromoSlider(banners: [
                     TImages.promoBanner1,
                     TImages.promoBanner2,
                     TImages.promoBanner3,
                   ],),
 
-                  SizedBox(height: TSizes.spaceBtwSections,),
+                  const SizedBox(height: TSizes.spaceBtwSections,),
 
+                  SectionHeading(title: "Popular Products", onPressed: () => Get.to(() => AllProducts()),),
+                  const SizedBox(height: TSizes.spaceBtwItems,),
 
                   GridLayout(itemCount: 4, itemBuilder: (_, index) => const ProductCardVertical(),),
 
@@ -106,9 +110,9 @@ class TPromoSlider extends StatelessWidget {
             viewportFraction: 1,
             onPageChanged: (index, _) => controller.updatePageIndicator(index),
           ),
-          items: banners.map((url) => TRoundedImage(imageUrl: url)).toList(),
+          items: banners.map((url) => RoundedImage(imageUrl: url)).toList(),
         ),
-        SizedBox(height: TSizes.spaceBtwItems,),
+        const SizedBox(height: TSizes.spaceBtwItems,),
 
         Center(
           child: Obx(
@@ -116,10 +120,10 @@ class TPromoSlider extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
               children: [
                 for (int i = 0; i < banners.length; i++)
-                TCircularContainer(
+                CircularContainer(
                   width: 20,
                     height: 4,
-                  margin: EdgeInsets.only(right: 10),
+                  margin: const EdgeInsets.only(right: 10),
                   backgroundColor: controller.carouselCurrentIndex.value == i ? TColors.primary : TColors.grey,
                 ),
               ],
@@ -131,8 +135,8 @@ class TPromoSlider extends StatelessWidget {
   }
 }
 
-class THomeCategories extends StatelessWidget {
-  const THomeCategories({
+class HomeCategories extends StatelessWidget {
+  const HomeCategories({
     super.key,
   });
 
@@ -145,10 +149,10 @@ class THomeCategories extends StatelessWidget {
           itemCount: 6,
           scrollDirection: Axis.horizontal,
           itemBuilder: (_, index) {
-            return TVerticalImageText(
+            return VerticalImageText(
               image: TImages.shoeIcon,
               title: 'Shoes',
-              onTap: () {},
+              onTap: () => Get.to(() => SubCategoriesScreen()),
             );
           }),
     );
@@ -163,12 +167,14 @@ class TSearchContainer extends StatelessWidget {
     this.showBackground = true,
     this.showBorder = true,
     this.onTap,
+    this.padding = const EdgeInsets.symmetric(horizontal: TSizes.defaultSpace)
   });
 
   final String text;
   final IconData? icon;
   final bool showBackground, showBorder;
   final VoidCallback? onTap;
+  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
@@ -177,10 +183,10 @@ class TSearchContainer extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: TSizes.defaultSpace),
+        padding: padding,
         child: Container(
           width: TDeviceUtils.getScreenWidth(context),
-          padding: EdgeInsets.all(TSizes.md),
+          padding: const EdgeInsets.all(TSizes.md),
           decoration: BoxDecoration(
             color: showBackground
                 ? dark
@@ -211,14 +217,14 @@ class TSearchContainer extends StatelessWidget {
   }
 }
 
-class THomeAppBar extends StatelessWidget {
-  const THomeAppBar({
+class HomeAppBar extends StatelessWidget {
+  const HomeAppBar({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TAppBar(
+    return CustomAppBar(
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -237,7 +243,7 @@ class THomeAppBar extends StatelessWidget {
         ],
       ),
       actions: [
-        TCartCounterIcon(
+        CartCounterIcon(
           onPressed: () {},
           iconColor: TColors.white,
         )
@@ -246,8 +252,8 @@ class THomeAppBar extends StatelessWidget {
   }
 }
 
-class TPrimaryHeaderContainer extends StatelessWidget {
-  const TPrimaryHeaderContainer({
+class PrimaryHeaderContainer extends StatelessWidget {
+  const PrimaryHeaderContainer({
     super.key,
     required this.child,
   });
@@ -256,7 +262,7 @@ class TPrimaryHeaderContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TCurvedEdgeWidget(
+    return CurvedEdgeWidget(
       child: Container(
           color: TColors.primary,
           padding: const EdgeInsets.all(0),
@@ -265,13 +271,13 @@ class TPrimaryHeaderContainer extends StatelessWidget {
               Positioned(
                   top: -150,
                   right: -250,
-                  child: TCircularContainer(
+                  child: CircularContainer(
                     backgroundColor: TColors.textWhite.withOpacity(0.1),
                   )),
               Positioned(
                   top: 100,
                   right: -300,
-                  child: TCircularContainer(
+                  child: CircularContainer(
                     backgroundColor: TColors.textWhite.withOpacity(0.1),
                   )),
               child,

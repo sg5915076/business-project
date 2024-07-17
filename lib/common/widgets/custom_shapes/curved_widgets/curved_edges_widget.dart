@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'curved_edges.dart';
 
-class TCurvedEdgeWidget extends StatelessWidget {
-  const TCurvedEdgeWidget({
+class CurvedEdgeWidget extends StatelessWidget {
+  const CurvedEdgeWidget({
     super.key, this.child,
   });
 
@@ -12,7 +12,7 @@ class TCurvedEdgeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipPath(
-      clipper: TCustomCurvedEdges(),
+      clipper: CustomCurvedEdges(),
       child: child,
     );
   }

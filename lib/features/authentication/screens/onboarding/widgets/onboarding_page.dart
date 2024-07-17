@@ -29,7 +29,7 @@ class OnBoardingPage extends StatelessWidget {
             style: Theme.of(context).textTheme.headlineMedium,
             textAlign: TextAlign.center,
           ),
-          SizedBox(
+          const SizedBox(
             height: TSizes.spaceBtwItems,
           ),
           Text(

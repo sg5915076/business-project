@@ -1,7 +1,6 @@
 import 'package:business_project/utils/constants/sizes.dart';
 import 'package:business_project/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 
 import '../../../utils/constants/colors.dart';
 

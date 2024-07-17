@@ -21,13 +21,13 @@ class SuccessScreen extends StatelessWidget {
           child: Column(
             children: [
               Image(image: AssetImage(image), width: THelperFunctions.screenWidth() * 0.6,),
-              SizedBox(height: TSizes.spaceBtwSections,),
+              const SizedBox(height: TSizes.spaceBtwSections,),
               Text(title, style: Theme.of(context).textTheme.headlineMedium, textAlign: TextAlign.center,),
-              SizedBox(height: TSizes.spaceBtwItems,),
+              const SizedBox(height: TSizes.spaceBtwItems,),
               Text(subTitle, style: Theme.of(context).textTheme.labelMedium, textAlign: TextAlign.center,),
-              SizedBox(height: TSizes.spaceBtwSections,),
+              const SizedBox(height: TSizes.spaceBtwSections,),
 
-              SizedBox(width: double.infinity, child: ElevatedButton(onPressed: onPressed, child: Text(TTexts.tContinue),),),
+              SizedBox(width: double.infinity, child: ElevatedButton(onPressed: onPressed, child: const Text(TTexts.tContinue),),),
             ],
           ),
         ),

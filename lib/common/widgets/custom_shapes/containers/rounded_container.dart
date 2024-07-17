@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class RoundedContainer extends StatelessWidget {
   const RoundedContainer(
-      {this.width,
+      {super.key, this.width,
       this.height,
         this.radius = TSizes.cardRadiusLg,
       this.child,

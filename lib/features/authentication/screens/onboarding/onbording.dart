@@ -4,7 +4,6 @@ import 'package:business_project/features/authentication/screens/onboarding/widg
 import 'package:business_project/features/authentication/screens/onboarding/widgets/onboarding_page.dart';
 import 'package:business_project/features/authentication/screens/onboarding/widgets/onboarding_skip.dart';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

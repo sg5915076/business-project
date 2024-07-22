@@ -8,90 +8,42 @@ on:
       - main
       - master
       - develop
-
 name: "Build & Release"
-
 jobs:
-  build_android:
-    name: Build Android APK
+  build:
+    name: Build & Release
     runs-on: windows-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Java
-        uses: actions/setup-java@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
           java-version: '12'
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
           architecture: x64
 
-      - name: Run Flutter Pub Get
-        run: flutter pub get
-
-      - name: Build Android APK
-        run: flutter build apk --release --split-per-abi
-
-      - name: Upload Android Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: android-artifacts
-          path: build/app/outputs/apk/release/*.apk
-
-  build_ios:
-    name: Build iOS IPA
-    runs-on: macos-latest
-    needs: build_android
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          architecture: x64
-
-      - name: Run Flutter Pub Get
-        run: flutter pub get
-
-      - name: Build iOS IPA
-        run: flutter build ipa
-
-      - name: Upload iOS Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: ios-artifacts
-          path: build/ios/ipa/*.ipa
-
-  release:
-    name: Create Release
-    runs-on: windows-latest
-    needs: [build_android, build_ios]
-
-    steps:
-      - name: Download Android Artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: android-artifacts
-          path: ./android
-
-      - name: Download iOS Artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: ios-artifacts
-          path: ./ios
-
+      - run: flutter build apk --release --split-per-abi
+      - run: |
+          flutter build ios --no-codesign
+          cd build/ios/iphoneos
+          mkdir Payload
+          cd Payload
+          ln -s ../Runner.app
+          cd ..
+          zip -r app.ipa Payload
       - name: Push to Releases
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "android/*.apk, ios/*.ipa"
+          artifacts: "build/app/outputs/apk/release/*,build/ios/iphoneos/app.ipa"
           tag: v1.0.${{ github.run_number }}
           token: ${{ secrets.TOKEN }}
+
+
+
+
+
+
+# push to master, main, develop
+# pull request on main master
